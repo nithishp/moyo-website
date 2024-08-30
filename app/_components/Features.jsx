@@ -196,8 +196,8 @@ const Features = () => {
                         Heatproof for cooking
                       </h4>
                       <p className="mt-2 ">
-                        Whether you're baking in the oven or grilling on high
-                        heat, our foil withstands high temperatures without
+                        Whether you are baking in the oven or grilling on
+                        high heat, our foil withstands high temperatures without
                         compromising its integrity, making it ideal for cooking,
                         reheating, and food preservation.
                       </p>

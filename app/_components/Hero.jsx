@@ -53,13 +53,13 @@ const words = ["Tissue", "Garbagr Bag", "Aluminium Foil", "Disposal Bag"];
             variants={textVariants}
             className="text-5xl font-bold sm:text-6xl leading-snug"
           >
-            When it's <br />
+            When it&#39;s <br />
             <span className="text-rose-600 leading-snug">
               {" "}
               <FlipWords words={words} />{" "}
             </span>
             <br />
-            then it's MOYO{" "}
+            then it&#39;s MOYO{" "}
           </motion.h1>
           <motion.p
             variants={textVariants}
