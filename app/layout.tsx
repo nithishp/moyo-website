@@ -23,6 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
       <body className={inter.className}>
         <div className="">
           <MainNav />
@@ -31,9 +34,8 @@ export default function RootLayout({
         <div className="min-h-screen mt-16">{children}</div>
 
         <div>
-          <Footer/>
+          <Footer />
         </div>
-      
       </body>
     </html>
   );

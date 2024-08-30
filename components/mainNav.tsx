@@ -10,8 +10,8 @@ export default function MainNav() {
 
   const menus = [
     { title: "Home", path: "/" },
-    { title: "Products", path: "/" },
-    { title: "FAQs", path: "/" },
+    { title: "Products", path: "/#products" },
+    { title: "Reviews", path: "/#testimonials" },
   ];
 
   return (

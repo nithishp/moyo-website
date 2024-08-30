@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import React from "react";
 import {ProductData} from '@/data'
+import Link from "next/link";
 
 const Productbasic = () => {
 
@@ -10,7 +11,7 @@ const Productbasic = () => {
  
   return (
     <div className="w-full">
-      <section className=" body-font">
+      <section className=" body-font" id="products">
         <div className="container px-10 py-24 mx-auto">
           <div className="mb-10">
             <h2 className="text-3xl font-bold tracki text-center sm:text-5xl ">
@@ -22,8 +23,11 @@ const Productbasic = () => {
           </div>
           <div className="flex flex-wrap gap-6 justify-center">
             {ProductData.map((item) => (
-              <Card key={item.id} className="lg:w-1/4 md:w-1/2 p-4 w-full cursor-pointer">
-                <a className="block relative h-48 rounded overflow-hidden">
+              <Card key={item.id} className="lg:w-1/4 md:w-1/2 p-4 w-full ">
+                <Link
+                  href={`/product-details/${item.id}`}
+                  className="block relative h-48 rounded overflow-hidden cursor-pointer"
+                >
                   <Image
                     height={500}
                     width={500}
@@ -31,7 +35,7 @@ const Productbasic = () => {
                     className="object-contain object-center w-full h-full block"
                     src={item.img}
                   />
-                </a>
+                </Link>
                 <div className="mt-4">
                   <h3 className=" text-xs tracking-widest title-font mb-1">
                     {item.category}

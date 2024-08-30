@@ -4,7 +4,7 @@ import React from "react";
 const Features = () => {
   return (
     <div>
-      <section className="">
+      <section className="" id="features">
         <div className="container max-w-xl p-6 py-12 mx-auto space-y-24 lg:px-8 lg:max-w-7xl">
           {/* HEADING */}
           <div>
