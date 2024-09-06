@@ -39,7 +39,7 @@ const ContactSection = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full" id="contact">
       <section className="body-font" id="products">
         <div className="container px-10 py-24 mx-auto">
           <div className="mb-10">

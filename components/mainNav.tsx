@@ -58,9 +58,13 @@ export default function MainNav() {
         title="menu"
         onClick={() => setState(!state)}
       >
-        <Menu />
+        <Menu className={`${state && "text-white"}`} />
       </button>
-      <header className="px-4 py-3 flex justify-start items-center bg-white">
+      <header
+        className={`px-4 py-3 flex justify-start items-center ${
+          state ? "bg-black" : "bg-white"
+        }  sm:bg-white`}
+      >
         {!state ? (
           <Link
             href="/"
@@ -76,27 +80,34 @@ export default function MainNav() {
           </Link>
         ) : null}
         <div className="flex justify-between">
-          <div className="flex">
+          <div className="flex ">
             <div
-              className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-                state ? "block" : "hidden"
-              }`}
+              className={`flex-1 justify-self-center pb-3 mt-8 md:block ${
+                state ? "max-sm:text-white" : "max-sm:text-black"
+              } md:pb-0 md:mt-0 ${state ? "block" : "hidden"}`}
             >
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger>
-                      Our story
-                    </NavigationMenuTrigger>
+                    <NavigationMenuTrigger>Our story</NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                      <ul
+                        className={`grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] ${
+                          state ? "text-white bg-black" : "text-black bg-white"
+                        }`}
+                      >
                         <li className="row-span-3">
                           <NavigationMenuLink asChild>
                             <a
                               className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                               href="/"
                             >
-                              <Image src='/brand/moyo-logo-black.png' height={25} width={25} alt="Moyo logo" />
+                              <Image
+                                src="/brand/moyo-logo-black.png"
+                                height={25}
+                                width={25}
+                                alt="Moyo logo"
+                              />
                               <div className="mb-2 mt-4 text-lg font-medium">
                                 shadcn/ui
                               </div>
@@ -130,7 +141,11 @@ export default function MainNav() {
                   <NavigationMenuItem>
                     <NavigationMenuTrigger>Products</NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                      <ul
+                        className={`grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ${
+                          state ? "text-white bg-black" : "text-black bg-white"
+                        }`}
+                      >
                         {components.map((component) => (
                           <ListItem
                             key={component.title}
@@ -144,7 +159,7 @@ export default function MainNav() {
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <Link href="/docs" legacyBehavior passHref>
+                    <Link href="/#contact" legacyBehavior passHref>
                       <NavigationMenuLink
                         className={navigationMenuTriggerStyle()}
                       >
@@ -176,7 +191,7 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="text-md font-semibold text-amber-200 md:text-rose-500  leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>

@@ -9,6 +9,7 @@ import Footer from './_components/Footer'
 
 const inter = Inter({ subsets: ["latin"] });
 
+
 export const metadata: Metadata = {
   title: "MOYO",
   description:

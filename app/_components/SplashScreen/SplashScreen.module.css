@@ -1,0 +1,68 @@
+/* styles/SplashScreen.module.css */
+@font-face {
+    font-family: BankGothic;
+    src: url("/public/brandFont/BankGothicBold.ttf");
+}
+
+.splashScreen {
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #000;
+    /* Dark background */
+    color: #fff;
+    text-align: center;
+    /* Ensure text is centered on smaller screens */
+    padding: 0 10vw;
+    /* Adds some padding for smaller screens */
+}
+
+.brandName {
+    font-size: 10vw;
+    /* Responsive font size based on viewport width */
+    font-family: BankGothic;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    line-height: 1.1;
+    /* Adjust line height for better spacing */
+    white-space: nowrap;
+    /* Prevent wrapping for larger screens */
+}
+
+.tagline {
+    font-size: 3vw;
+    /* Responsive font size for tagline */
+    font-family: BankGothic;
+    margin-top: 2vh;
+    /* Adjust margin for responsiveness */
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    animation-delay: 2s;
+    color: #fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Additional media query for very small screens */
+@media (max-width: 600px) {
+    .brandName {
+        font-size: 14vw;
+        /* Increase font size for smaller screens */
+    }
+
+    .tagline {
+        font-size: 5vw;
+        /* Adjust tagline font size */
+    }
+}
