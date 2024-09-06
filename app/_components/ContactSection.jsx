@@ -44,11 +44,11 @@ const ContactSection = () => {
         <div className="container px-10 py-24 mx-auto">
           <div className="mb-10">
             <h2 className="text-3xl font-bold tracki text-center sm:text-5xl">
-              Let's Talk
+              Let&#39;s Talk
             </h2>
             <p className="max-w-3xl mx-auto mt-4 text-xl text-center">
-              Whether you're a customer or a distributor, get in touch with us
-              to learn more about our products and services.
+              Whether you&#39;re a customer or a distributor, get in touch with
+              us to learn more about our products and services.
             </p>
           </div>
           <div className="flex flex-wrap gap-6 justify-center">
@@ -76,8 +76,8 @@ const ContactSection = () => {
                       Customer Enquiry
                     </h1>
                     <p className="mx-auto mt-4 mb-6 max-w-md text-center text-gray-500">
-                      We'd love to hear from you! Let us know how we can help
-                      with your needs.
+                      We&#39;d love to hear from you! Let us know how we can
+                      help with your needs.
                     </p>
                     <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
                       <form
@@ -194,7 +194,7 @@ const ContactSection = () => {
                     </h1>
                     <p className="mx-auto mt-4 mb-6 max-w-md text-center text-gray-500">
                       Interested in becoming a distributor? Let us know, and
-                      we'll get back to you with details.
+                      we&#39;ll get back to you with details.
                     </p>
                     <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
                       <form
