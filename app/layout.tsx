@@ -35,6 +35,7 @@ export default function RootLayout({
 
         <div>
           <Footer />
+          <Toaster />
         </div>
       </body>
     </html>

@@ -6,6 +6,16 @@ import { Flower2, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 
+import { cn } from "@/lib/utils";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 export default function MainNav() {
   const [state, setState] = React.useState(false);
 
@@ -14,6 +24,32 @@ export default function MainNav() {
     { title: "Products", path: "/#products" },
     { title: "Reviews", path: "/#testimonials" },
   ];
+  const components = [
+    {
+      title: "Tissue Box",
+      href: "/product-details/1",
+      description: "Experience ultra-soft tissues that are gentle on the skin ",
+    },
+    {
+      title: "Aluminium Foil",
+      href: "/product-details/2",
+      description:
+        "Durable and tear-resistant foil for covering, wrapping, and storing food ",
+    },
+    {
+      title: "Grabage Bage",
+      href: "/product-details/3",
+      description:
+        "Try MOYO garbage bags for home and office use.",
+    },
+    {
+      title: "Disposal Bage",
+      href: "/product-details/3",
+      description:
+        "Dispose of waste conveniently and hygienically with MOYO premium disposable bags",
+    },
+  ];
+ 
 
   return (
     <div className="fixed top-0 left-0 w-full z-50">
@@ -31,8 +67,12 @@ export default function MainNav() {
             aria-label="Back to homepage"
             className=" flex md:justify-center justify-start items-center gap-3"
           >
-          
-            <Image src='/brand/moyo-logo-black.png' alt="Moyo logo" width={100} height={80} />
+            <Image
+              src="/brand/moyo-logo-black.png"
+              alt="Moyo logo"
+              width={100}
+              height={80}
+            />
           </Link>
         ) : null}
         <div className="flex justify-between">
@@ -42,16 +82,78 @@ export default function MainNav() {
                 state ? "block" : "hidden"
               }`}
             >
-              <ul className="justify-center items-center space-y-8 md:flex md:space-x-6 md:space-y-0 mt-2 ml-5 font-semibold">
-                {menus.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className=" hover:text-rose-600 text-sm"
-                  >
-                    <Link href={item.path}>{item.title}</Link>
-                  </li>
-                ))}
-              </ul>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>
+                      Our story
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                        <li className="row-span-3">
+                          <NavigationMenuLink asChild>
+                            <a
+                              className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                              href="/"
+                            >
+                              <Image src='/brand/moyo-logo-black.png' height={25} width={25} alt="Moyo logo" />
+                              <div className="mb-2 mt-4 text-lg font-medium">
+                                shadcn/ui
+                              </div>
+                              <p className="text-sm leading-tight text-muted-foreground">
+                                Beautifully designed components that you can
+                                copy and paste into your apps. Accessible.
+                                Customizable. Open Source.
+                              </p>
+                            </a>
+                          </NavigationMenuLink>
+                        </li>
+                        <ListItem href="/docs" title="Introduction">
+                          Re-usable components built using Radix UI and Tailwind
+                          CSS.
+                        </ListItem>
+                        <ListItem
+                          href="/docs/installation"
+                          title="Installation"
+                        >
+                          How to install dependencies and structure your app.
+                        </ListItem>
+                        <ListItem
+                          href="/docs/primitives/typography"
+                          title="Typography"
+                        >
+                          Styles for headings, paragraphs, lists...etc
+                        </ListItem>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                        {components.map((component) => (
+                          <ListItem
+                            key={component.title}
+                            title={component.title}
+                            href={component.href}
+                          >
+                            {component.description}
+                          </ListItem>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <Link href="/docs" legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                      >
+                        Contact Us
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </div>
           </div>
         </div>
@@ -59,3 +161,28 @@ export default function MainNav() {
     </div>
   );
 }
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";

@@ -8,6 +8,7 @@ import Features from "./_components/Features";
 import Banner from "./_components/Banner";
 import TestimonialCard from "./_components/TestimonialCard";
 import ProductSection from './_components/ProductSection'
+import  ContactSection from "./_components/ContactSection";
 
 
 export default function Home() {
@@ -16,9 +17,9 @@ export default function Home() {
       <Hero />
       <Stats />
       <Features />
-      <ProductSection/>
+      <ProductSection />
       <TestimonialCard />
-    
+      <ContactSection/>
     </main>
   );
 }
