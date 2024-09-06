@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import React from "react";
+import { testimonials } from "@/data";
 
 const Testimonialcard = () => {
   return (
@@ -9,109 +10,93 @@ const Testimonialcard = () => {
         <div className="container px-6 py-12 mx-auto">
           <div className="grid items-center gap-4 xl:grid-cols-5">
             <div className="max-w-2xl mx-auto my-8 space-y-4 text-center xl:col-span-2 xl:text-left">
-              <h2 className="text-4xl font-bold">
-                Duo assum utroque appetere an
-              </h2>
+              <h2 className="text-4xl font-bold">What Our Clients Say</h2>
               <p className="">
-                Pri ex magna scaevola moderatius. Nullam accommodare no vix, est
-                ei diceret alienum, et sit cetero malorum. Et sea iudico
-                consequat, est sanctus adipisci ex.
+                Hear what our satisfied customers are saying about MOYO’s
+                exceptional service and high-quality products.
               </p>
             </div>
             <div className="p-6 xl:col-span-3">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="grid content-center gap-4">
+                  {/* Card 1 */}
                   <Card className="p-6 rounded shadow-md">
-                    <p>
-                      An audire commodo habemus cum. Ne sed corrumpit
-                      repudiandae. Tota aliquip democritum pro in, nec
-                      democritum intellegam ne. Propriae volutpat dissentiet ea
-                      sit, nec at lorem inani tritani, an ius populo perfecto
-                      vituperatoribus. Eu cum case modus salutandi, ut eum
-                      vocent sensibus reprehendunt.
-                    </p>
+                    <p>{testimonials[0].feedback}</p>
                     <div className="flex items-center mt-4 space-x-4">
                       <Image
                         height={200}
                         width={200}
-                        src="https://source.unsplash.com/50x50/?girl?1"
-                        alt=""
+                        src={testimonials[0].image}
+                        alt={testimonials[0].name}
                         className="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
                       />
                       <div>
-                        <p className="text-lg font-semibold">Leroy Jenkins</p>
-                        <p className="text-sm ">CTO of Company Co.</p>
+                        <p className="text-lg font-semibold">
+                          {testimonials[0].name}
+                        </p>
+                        <p className="text-sm">{testimonials[0].title}</p>
                       </div>
                     </div>
                   </Card>
+
+                  {/* Card 2 */}
                   <Card className="p-6 rounded shadow-md">
-                    <p>
-                      Sit wisi sapientem ut, pri civibus temporibus voluptatibus
-                      et, ius cu hinc fabulas. Nam meliore minimum et, regione
-                      convenire cum id. Ex pro eros mucius consectetuer, pro
-                      magna nulla nonumy ne, eam putent iudicabit consulatu cu.
-                    </p>
+                    <p>{testimonials[1].feedback}</p>
                     <div className="flex items-center mt-4 space-x-4">
                       <Image
                         height={200}
                         width={200}
-                        src="https://source.unsplash.com/50x50/?girl?2"
-                        alt=""
+                        src={testimonials[1].image}
+                        alt={testimonials[1].name}
                         className="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
                       />
                       <div>
-                        <p className="text-lg font-semibold">Leroy Jenkins</p>
-                        <p className="text-sm ">CTO of Company Co.</p>
+                        <p className="text-lg font-semibold">
+                          {testimonials[1].name}
+                        </p>
+                        <p className="text-sm">{testimonials[1].title}</p>
                       </div>
                     </div>
                   </Card>
                 </div>
+
                 <div className="grid content-center gap-4">
+                  {/* Card 3 */}
                   <Card className="p-6 rounded shadow-md">
-                    <p>
-                      Putant omnium elaboraret per ut. Id dicta tritani nominavi
-                      quo, mea id justo errem elaboraret. Agam mollis scripserit
-                      ea his, ut nec postea verear persecuti. Ea noster senserit
-                      eam, ferri omittantur ei nec. Id mel solet libris
-                      efficiantur, commune explicari et eos. Case movet ad est,
-                      sed tota vocent appetere ea.
-                    </p>
+                    <p>{testimonials[2].feedback}</p>
                     <div className="flex items-center mt-4 space-x-4">
                       <Image
                         height={200}
                         width={200}
-                        src="https://source.unsplash.com/50x50/?girl?3"
-                        alt=""
+                        src={testimonials[2].image}
+                        alt={testimonials[2].name}
                         className="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
                       />
                       <div>
-                        <p className="text-lg font-semibold">Leroy Jenkins</p>
-                        <p className="text-sm ">CTO of Company Co.</p>
+                        <p className="text-lg font-semibold">
+                          {testimonials[2].name}
+                        </p>
+                        <p className="text-sm">{testimonials[2].title}</p>
                       </div>
                     </div>
                   </Card>
+
+                  {/* Card 4 */}
                   <Card className="p-6 rounded shadow-md">
-                    <p>
-                      Te omnes virtute volutpat sed. Ei esse eros interesset
-                      vel, ei populo denique ocurreret vix, eu cum pertinax
-                      mandamus vituperatoribus. Solum nihil luptatum per ex, ei
-                      amet viderer eos. Ea illum labitur mnesarchum pro. Eius
-                      meis salutandi ei nam, alterum expetenda et nec. Expetenda
-                      intellegat at eum, per mazim sanctus honestatis ad. Ei
-                      noluisse invenire vix. Te ancillae patrioque qui, probo
-                      bonorum vivendum ex vim.
-                    </p>
+                    <p>{testimonials[3].feedback}</p>
                     <div className="flex items-center mt-4 space-x-4">
                       <Image
                         height={200}
                         width={200}
-                        src="https://source.unsplash.com/50x50/?girl?4"
-                        alt=""
+                        src={testimonials[3].image}
+                        alt={testimonials[3].name}
                         className="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
                       />
                       <div>
-                        <p className="text-lg font-semibold">Leroy Jenkins</p>
-                        <p className="text-sm ">CTO of Company Co.</p>
+                        <p className="text-lg font-semibold">
+                          {testimonials[3].name}
+                        </p>
+                        <p className="text-sm">{testimonials[3].title}</p>
                       </div>
                     </div>
                   </Card>

@@ -9,6 +9,7 @@ import Banner from "./_components/Banner";
 import TestimonialCard from "./_components/TestimonialCard";
 import ProductSection from './_components/ProductSection'
 
+
 export default function Home() {
   return (
     <main className="">
@@ -17,6 +18,7 @@ export default function Home() {
       <Features />
       <ProductSection/>
       <TestimonialCard />
+    
     </main>
   );
 }

@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Flower2, Menu } from "lucide-react";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 export default function MainNav() {
   const [state, setState] = React.useState(false);
@@ -23,7 +24,7 @@ export default function MainNav() {
       >
         <Menu />
       </button>
-      <header className="px-4 py-3 flex justify-start  bg-white">
+      <header className="px-4 py-3 flex justify-start items-center bg-white">
         {!state ? (
           <Link
             href="/"
@@ -31,9 +32,7 @@ export default function MainNav() {
             className=" flex md:justify-center justify-start items-center gap-3"
           >
           
-            <span className="ml-5 self-center text-3xl  font-semibold">
-              MOYO
-            </span>
+            <Image src='/brand/moyo-logo-black.png' alt="Moyo logo" width={100} height={80} />
           </Link>
         ) : null}
         <div className="flex justify-between">

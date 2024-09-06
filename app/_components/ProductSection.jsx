@@ -1,7 +1,6 @@
-'use client'
+
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import React from "react";
 import {ProductData} from '@/data'
 import Link from "next/link";
 

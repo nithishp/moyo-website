@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 const svgToDataUri = require("mini-svg-data-uri");
-
 const colors = require("tailwindcss/colors");
 const {
   default: flattenColorPalette,
@@ -24,6 +23,14 @@ module.exports = {
     },
     extend: {
       keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -90,6 +97,8 @@ module.exports = {
         },
       },
       animation: {
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         spotlight: "spotlight 2s ease .75s 1 forwards",
@@ -104,7 +113,11 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), addVariablesForColors],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/forms"),
+    addVariablesForColors,
+  ],
 };
 function addVariablesForColors({ addBase, theme }) {
   let allColors = flattenColorPalette(theme("colors"));

@@ -4,36 +4,35 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FlipWords } from "@/components/ui/flip-words";
+import Link from "next/link";
 
 const images = [
   "/products/MOYO-PINK.png",
+  "/products/GARBAGE-BAG.png",
   "/products/ALUMINIUM-FOIL.png",
-  "/products/TISSUE-PACK.png", // Add more image URLs here
+  "/products/DISPOSAL-BAG.png",
 ];
+
+const words = ["Tissue", "Garbage Bag", "Aluminium Foil", "Disposal Bag"];
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-const words = ["Tissue", "Garbagr Bag", "Aluminium Foil", "Disposal Bag"];
-  // Autoplay functionality
+
+  // Autoplay functionality for both images and words
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+    }, 3000); // Change every 3 seconds
+
     return () => clearInterval(interval);
   }, []);
 
   const textVariants = {
-    initial: {
-      x: -500,
-      opacity: 0,
-    },
+    initial: { x: -500, opacity: 0 },
     animate: {
       x: 0,
       opacity: 1,
-      transition: {
-        duration: 1,
-        staggerChildren: 0.1,
-      },
+      transition: { duration: 1, staggerChildren: 0.1 },
     },
   };
 
@@ -56,14 +55,14 @@ const words = ["Tissue", "Garbagr Bag", "Aluminium Foil", "Disposal Bag"];
             When it&#39;s <br />
             <span className="text-rose-600 leading-snug">
               {" "}
-              <FlipWords words={words} />{" "}
+              <FlipWords words={words} currentIndex={currentIndex} />{" "}
             </span>
             <br />
             then it&#39;s MOYO{" "}
           </motion.h1>
           <motion.p
             variants={textVariants}
-            className="mt-6 mb-8 text-lg sm:mb-12 leading-snug  "
+            className="mt-6 mb-8 text-lg sm:mb-12 leading-snug"
           >
             Everyone deserves the best.
           </motion.p>
@@ -71,7 +70,9 @@ const words = ["Tissue", "Garbagr Bag", "Aluminium Foil", "Disposal Bag"];
             variants={textVariants}
             className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start"
           >
-            <Button className="bg-rose-500 text-white">Get to Know Us</Button>
+            <Link href="/#products">
+              <Button className="bg-rose-500 text-white">View Products</Button>
+            </Link>
           </motion.div>
         </motion.div>
 
@@ -90,7 +91,7 @@ const words = ["Tissue", "Garbagr Bag", "Aluminium Foil", "Disposal Bag"];
                 alt={`MOYO product ${currentIndex}`}
                 height={500}
                 width={500}
-                className="rounded-sm"
+                className="rounded-sm object-contain"
               />
             </motion.div>
           </AnimatePresence>

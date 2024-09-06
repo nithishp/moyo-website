@@ -3,8 +3,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { ProductData } from "@/data";
 import ProductNotFound from "@/app/_components/ProductNotFound";
+import { Lens } from "@/components/ui/lens";
 
 const ProductDetails = ({ params }) => {
+  const [hovering, setHovering] = useState(false);
   const product = ProductData.find((item) => item.id === parseInt(params.id));
 
   // Use useState hook outside conditional block
@@ -27,6 +29,8 @@ const ProductDetails = ({ params }) => {
       <section className="body-font overflow-hidden">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
+            <Lens hovering={hovering} setHovering={setHovering} zoomFactor={2}>
+            
             <Image
               height={500}
               width={500}
@@ -34,6 +38,7 @@ const ProductDetails = ({ params }) => {
               className="lg:w-[23vw] w-full lg:h-auto h-[50vh] object-cover object-center rounded"
               src={selectedVariant?.image || product.img}
             />
+            </Lens>
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font tracking-widest">
                 {product.category}

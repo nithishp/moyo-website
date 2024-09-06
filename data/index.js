@@ -7,6 +7,7 @@ export const ProductData = [
     img: "/products/TISSUE-BOX-RED.png",
     description: "High-quality tissue box for your daily needs.",
     price: "₹150",
+    productType: "home",
     variants: [
       {
         id: 1,
@@ -23,7 +24,7 @@ export const ProductData = [
       {
         id: 3,
 
-        variant: "Green",
+        variant: "White",
         price: "₹170",
         image: "/products/TISSUE-BOX-WHITE.png",
       },
@@ -61,6 +62,7 @@ export const ProductData = [
     img: "/products/ALUMINIUM-FOIL.png",
     description: "High-quality aluminium foil for wrapping and cooking.",
     price: "₹50",
+    productType: "kitchen",
     variants: [
       {
         id: 1,
@@ -104,17 +106,17 @@ export const ProductData = [
       {
         name: "Grade",
         value: "Food Grade",
-      }
-     
+      },
     ],
   },
   {
     id: 3,
     name: "Garbage Bag",
-    category: "Home Essentials",
+    category: "Hygiene Essentials",
     img: "/products/GARBAGE-BAG.png",
     description: "Durable garbage bags for home and office use.",
     price: "₹30",
+    productType: "hygiene",
     variants: [
       {
         id: 1,
@@ -169,3 +171,34 @@ export const ProductData = [
   },
 ];
 
+
+export const testimonials = [
+  {
+    name: "John Doe",
+    title: "CEO, Tech Solutions",
+    feedback:
+      "MOYO has transformed our business. The quality of their products is exceptional, and their service is unbeatable. Highly recommended!",
+    image: "/testimonials/p1.png",
+  },
+  {
+    name: "Sarah Williams",
+    title: "Marketing Manager, Green Life",
+    feedback:
+      "Our experience with MOYO has been fantastic. The attention to detail and professionalism is exactly what we were looking for!",
+    image: "/testimonials/p2.png",
+  },
+  {
+    name: "Michael Smith",
+    title: "Operations Head, Clean Co.",
+    feedback:
+      "Working with MOYO has been a pivotal decision for us. As an operations manager, finding suppliers who can consistently deliver high-quality products on time is crucial, and MOYO has exceeded our expectations. Their range of products, especially their garbage bags and tissue boxes, have proven to be durable and efficient, which helps us maintain our operational standards. ",
+    image: "/testimonials/p3.png",
+  },
+  {
+    name: "Emily Clark",
+    title: "Founder, Eco Homes",
+    feedback:
+      "MOYO’s products have not only met our expectations but exceeded them in every possible way. As a company that deeply values sustainability, finding eco-friendly options for household essentials was a challenge. However, MOYO came through with products that align with our values and offer durability without compromising on quality. ",
+    image: "/testimonials/p4.png",
+  },
+];
