@@ -1,46 +1,52 @@
-/* styles/SplashScreen.module.css */
 @font-face {
     font-family: BankGothic;
-    src: url("/public/brandFont/BankGothicBold.ttf");
+    src: url("/brandFont/BankGothicBold.ttf") format("truetype");
+    font-display: swap;
+    /* Ensures the fallback font is displayed until the custom font is loaded */
 }
 
 .splashScreen {
+    position: fixed;
+    /* Cover the full viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 9999;
+    /* Ensure it's on top */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     background-color: #000;
     /* Dark background */
     color: #fff;
     text-align: center;
-    /* Ensure text is centered on smaller screens */
     padding: 0 10vw;
-    /* Adds some padding for smaller screens */
+    /* Padding for small screens */
+    overflow: hidden;
+    /* Prevent any scrollbars */
 }
 
 .brandName {
     font-size: 10vw;
-    /* Responsive font size based on viewport width */
-    font-family: BankGothic;
+    /* Responsive font size */
+    font-family: BankGothic, sans-serif;
     opacity: 0;
     animation: fadeIn 2s forwards;
     line-height: 1.1;
-    /* Adjust line height for better spacing */
     white-space: nowrap;
-    /* Prevent wrapping for larger screens */
+    /* Prevent wrapping */
 }
 
 .tagline {
     font-size: 3vw;
-    /* Responsive font size for tagline */
-    font-family: BankGothic;
+    font-family: BankGothic, sans-serif;
     margin-top: 2vh;
-    /* Adjust margin for responsiveness */
     opacity: 0;
     animation: fadeIn 2s forwards;
     animation-delay: 2s;
+    /* Delay for tagline */
     color: #fff;
 }
 
@@ -54,15 +60,15 @@
     }
 }
 
-/* Additional media query for very small screens */
+/* Adjustments for smaller screens */
 @media (max-width: 600px) {
     .brandName {
         font-size: 14vw;
-        /* Increase font size for smaller screens */
+        /* Larger font for small screens */
     }
 
     .tagline {
         font-size: 5vw;
-        /* Adjust tagline font size */
+        /* Larger tagline for small screens */
     }
 }

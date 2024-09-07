@@ -35,6 +35,12 @@ const Hero = () => {
       transition: { duration: 1, staggerChildren: 0.1 },
     },
   };
+    const scrollToSection = (id) => {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    };
 
   return (
     <section className="relative overflow-hidden">
@@ -71,7 +77,12 @@ const Hero = () => {
             className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start"
           >
             <Link href="/#products">
-              <Button className="bg-rose-500 text-white">View Products</Button>
+              <Button
+                className="bg-rose-500 text-white"
+                onClick={() => scrollToSection("features")}
+              >
+                View Products
+              </Button>
             </Link>
           </motion.div>
         </motion.div>
