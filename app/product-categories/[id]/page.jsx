@@ -48,7 +48,7 @@ const ProductCategories = ({ params }) => {
                   {item.category}
                 </h3>
                 <h2 className=" title-font text-lg font-medium">{item.name}</h2>
-                <p className="mt-1">{item.price}</p>
+                
               </div>
             </Card>
           ))}

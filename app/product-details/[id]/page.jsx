@@ -95,11 +95,7 @@ const ProductDetails = ({ params }) => {
                 ))}
               </div>
 
-              <div className="flex">
-                <span className="title-font font-medium text-2xl">
-                  {selectedVariant?.price}
-                </span>
-              </div>
+              
             </div>
           </div>
         </div>

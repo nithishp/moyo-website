@@ -12,6 +12,7 @@ import ProductSection from './_components/ProductSection'
 import  ContactSection from "./_components/ContactSection";
 import {SplashScreen} from './_components/SplashScreen/SplashScreen'
 import { useState, useEffect } from "react";
+import Footer from "./_components/Footer";
 export default function Home() {
    const [loading, setLoading] = useState(true);
 
@@ -32,7 +33,8 @@ export default function Home() {
       <Features />
       <ProductSection />
       <TestimonialCard />
-      <ContactSection/>
+      <ContactSection />
+      <Footer/>
     </main>
   );
 }
