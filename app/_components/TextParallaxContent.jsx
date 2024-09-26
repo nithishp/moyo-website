@@ -107,7 +107,7 @@ const OverlayCopy = ({ subheading, heading }) => {
 const ExampleContent1 = () => (
   <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
     <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
-      Explore our <span className="moyo">MOYO's</span> home categories
+      Explore our <span className="moyo">MOYO&#39;s</span> home categories
     </h2>
     <div className="col-span-1 md:col-span-8">
       <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
@@ -130,7 +130,7 @@ const ExampleContent1 = () => (
 const ExampleContent2 = () => (
   <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
     <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
-      Explore our <span className="moyo">MOYO's</span> health categories
+      Explore our <span className="moyo">MOYO&#39;s</span> health categories
     </h2>
     <div className="col-span-1 md:col-span-8">
       <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
@@ -152,7 +152,7 @@ const ExampleContent2 = () => (
 const ExampleContent3 = () => (
   <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
     <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
-      Explore our <span className="moyo">MOYO's</span> hygiene categories
+      Explore our <span className="moyo">MOYO&#39;s</span> hygiene categories
     </h2>
     <div className="col-span-1 md:col-span-8">
       <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
