@@ -29,9 +29,9 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <body className={inter.className}>
-        <NavigationBar>
+        <MainNav/>
           <div className="min-h-screen w-screen mt-16">{children}</div>
-        </NavigationBar>
+        
         <div>
           
           <Toaster />
