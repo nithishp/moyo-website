@@ -1,11 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.cdnfonts.com/css/bankgothic-md-bt');
-
-.moyo {
-    font-family: 'BankGothic Md BT', sans-serif;
-}
 .no-visible-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;

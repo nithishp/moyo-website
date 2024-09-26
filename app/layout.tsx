@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import MainNav from "@/components/mainNav";
 import MainFooter from "@/components/mainFooter";
 import { Toaster } from "sonner";
 import Head from "next/head";
 import Footer from './_components/Footer'
+import {NavigationBar} from './_components/NavigationBar';  
+import './global.css'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,14 +29,11 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <body className={inter.className}>
-        <div className="">
-          <MainNav />
-        </div>
-
-        <div className="min-h-screen mt-16">{children}</div>
-
+        <NavigationBar>
+          <div className="min-h-screen w-screen mt-16">{children}</div>
+        </NavigationBar>
         <div>
-          <Footer />
+          
           <Toaster />
         </div>
       </body>
