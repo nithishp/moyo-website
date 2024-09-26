@@ -89,7 +89,7 @@ export default function MainNav() {
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger>Our story</NavigationMenuTrigger>
+                    <NavigationMenuTrigger> About us </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul
                         className={`grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] ${
@@ -102,38 +102,30 @@ export default function MainNav() {
                               className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                               href="/"
                             >
-                              <Image
-                                src="/brand/moyo-logo-black.png"
-                                height={25}
-                                width={25}
-                                alt="Moyo logo"
-                              />
+                            
                               <div className="mb-2 mt-4 text-lg font-medium">
-                                shadcn/ui
+                                <span className="moyo">MOYO </span>
                               </div>
                               <p className="text-sm leading-tight text-muted-foreground">
-                                Beautifully designed components that you can
-                                copy and paste into your apps. Accessible.
-                                Customizable. Open Source.
+                               Beautiful and modern products for your home
                               </p>
                             </a>
                           </NavigationMenuLink>
                         </li>
-                        <ListItem href="/docs" title="Introduction">
-                          Re-usable components built using Radix UI and Tailwind
-                          CSS.
+                        <ListItem href="/#features" title="Best-selling Products">
+                          Take a look at our best-selling products.
                         </ListItem>
                         <ListItem
-                          href="/docs/installation"
-                          title="Installation"
+                          href="/categories"
+                          title="Categories"
                         >
-                          How to install dependencies and structure your app.
+                          Moyo has vast range of products take a dive into it.
                         </ListItem>
                         <ListItem
-                          href="/docs/primitives/typography"
-                          title="Typography"
+                          href="/#testimonials"
+                          title="Reviews"
                         >
-                          Styles for headings, paragraphs, lists...etc
+                          Take a glance at all our products.
                         </ListItem>
                       </ul>
                     </NavigationMenuContent>
