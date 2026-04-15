@@ -1,60 +1,188 @@
 "use client";
-import { useState } from "react";
+
+import { use } from "react";
 import { ProductData } from "@/data";
 import ProductNotFound from "@/app/_components/ProductNotFound";
-import { Card } from "@/components/ui/card";
 import Link from "next/link";
-import Image from "next/image"; // <-- Add this line
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 const ProductCategories = ({ params }) => {
-  const products = ProductData.filter((item) => item.productType === params.id);
+  const { id } = use(params);
+  const products = ProductData.filter((item) => item.productType === id);
 
   if (!products || products.length === 0) {
     return <ProductNotFound />;
   }
 
-  console.log(products);
+  const categoryName = products[0].category;
 
   return (
-    <section>
-      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <header className="text-center">
-          <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-            {products[0].category}
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-md text-gray-500">
-            Check out the vast range of MOYO {products[0].category} products.
+    <main
+      style={{
+        backgroundColor: "#FAF7F2",
+        minHeight: "100vh",
+        paddingTop: "7rem",
+        paddingBottom: "6rem",
+      }}
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          style={{ marginBottom: "4rem" }}
+        >
+          {/* Eyebrow */}
+          <p
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontSize: "0.75rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "#C41230",
+              marginBottom: "0.75rem",
+            }}
+          >
+            Collection
           </p>
-        </header>
 
-        <div className="flex mt-10 flex-wrap gap-6 justify-center">
-          {products.map((item) => (
-            <Card key={item.id} className="lg:w-1/4 md:w-1/2 p-4 w-full ">
+          {/* Title */}
+          <h1
+            style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(2.5rem, 6vw, 4rem)",
+              fontWeight: 400,
+              color: "#1A1510",
+              lineHeight: 1.1,
+              marginBottom: "1rem",
+            }}
+          >
+            {categoryName}
+          </h1>
+
+          <div
+            style={{
+              width: "48px",
+              height: "2px",
+              backgroundColor: "#C41230",
+            }}
+          />
+
+          <p
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontSize: "1rem",
+              color: "#786E63",
+              marginTop: "1.25rem",
+              maxWidth: "480px",
+              lineHeight: 1.7,
+            }}
+          >
+            Explore the full MOYO {categoryName} range — quality crafted for
+            every home.
+          </p>
+        </motion.div>
+
+        {/* Product grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+            gap: "1px",
+            backgroundColor: "#E0D8CC",
+          }}
+        >
+          {products.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.07 }}
+            >
               <Link
                 href={`/product-details/${item.id}`}
-                className="block relative h-48 rounded overflow-hidden cursor-pointer"
+                style={{
+                  display: "block",
+                  backgroundColor: "#FAF7F2",
+                  padding: "2rem",
+                  transition: "background-color 0.25s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#F2EDE4";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#FAF7F2";
+                }}
               >
-                <Image
-                  height={500}
-                  width={500}
-                  alt="ecommerce"
-                  className="object-contain object-center w-full h-full block"
-                  src={item.img}
-                />
-              </Link>
-              <div className="mt-4">
-                <h3 className=" text-xs tracking-widest title-font mb-1">
+                {/* Image */}
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    marginBottom: "1.5rem",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Image
+                    src={item.img}
+                    alt={item.name}
+                    fill
+                    style={{ objectFit: "contain" }}
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                  />
+                </div>
+
+                {/* Meta */}
+                <p
+                  style={{
+                    fontFamily: "var(--font-dm-sans)",
+                    fontSize: "0.7rem",
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: "#786E63",
+                    marginBottom: "0.4rem",
+                  }}
+                >
                   {item.category}
-                </h3>
-                <h2 className=" title-font text-lg font-medium">{item.name}</h2>
-                
-              </div>
-            </Card>
+                </p>
+                <h2
+                  style={{
+                    fontFamily: "var(--font-cormorant)",
+                    fontSize: "1.35rem",
+                    fontWeight: 500,
+                    color: "#1A1510",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {item.name}
+                </h2>
+
+                {/* View link */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    marginTop: "1rem",
+                    fontFamily: "var(--font-dm-sans)",
+                    fontSize: "0.8rem",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "#C41230",
+                  }}
+                >
+                  View details
+                  <span style={{ fontSize: "1rem" }}>→</span>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </main>
   );
 };
 

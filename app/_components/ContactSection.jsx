@@ -1,324 +1,337 @@
-'use client'
+﻿"use client";
 import React, { useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import emailjs from "emailjs-com";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const ContactSection = () => {
-    const [isSending,setIsSending] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const customerForm = useRef();
   const distributorForm = useRef();
 
   const sendEmail = (e, formRef) => {
-    setIsSending(true)
+    setIsSending(true);
     e.preventDefault();
-
     emailjs
       .sendForm(
-        "service_jt4uvle", // Replace with your EmailJS service ID
-        "template_5a0xkgf", // Replace with your EmailJS template ID
+        "service_jt4uvle",
+        "template_5a0xkgf",
         formRef.current,
-        "efPf0u1zDn-baacb3" // Replace with your EmailJS user ID
+        "efPf0u1zDn-baacb3",
       )
       .then(
-        (result) => {
-          console.log("Message Sent!", result.text);
+        () => {
           toast("Your message has been sent successfully!");
-           setIsSending(false)
+          setIsSending(false);
         },
-        (error) => {
-          console.log("An error occurred", error.text);
+        () => {
           toast("An error occurred. Please try again.");
-          
-           setIsSending(false)
-        }
+          setIsSending(false);
+        },
       );
-
-    // Reset form fields after submission
     formRef.current.reset();
   };
 
+  const inputStyle = {
+    width: "100%",
+    backgroundColor: "transparent",
+    borderTop: "none",
+    borderLeft: "none",
+    borderRight: "none",
+    borderBottom: "1px solid #E0D8CC",
+    padding: "0.75rem 0",
+    color: "#1A1510",
+    fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+    fontSize: "0.875rem",
+    outline: "none",
+    transition: "border-color 0.2s",
+  };
+
+  const labelStyle = {
+    display: "block",
+    fontSize: "0.625rem",
+    letterSpacing: "0.25em",
+    textTransform: "uppercase",
+    color: "#786E63",
+    fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+    marginBottom: "0.25rem",
+  };
+
+  const FormFields = ({ formRef, onSubmit, type }) => (
+    <form
+      ref={formRef}
+      onSubmit={(e) => onSubmit(e, formRef)}
+      style={{ marginTop: "2.5rem" }}
+    >
+      <input type="hidden" name="client" value={type} />
+      <div
+        style={{ gap: "2rem", marginBottom: "2rem" }}
+        className="grid grid-cols-1 sm:grid-cols-2"
+      >
+        <div>
+          <label style={labelStyle}>Name</label>
+          <input
+            style={inputStyle}
+            placeholder="Your full name"
+            type="text"
+            name="name"
+            required
+            onFocus={(e) => (e.target.style.borderBottomColor = "#C41230")}
+            onBlur={(e) => (e.target.style.borderBottomColor = "#E0D8CC")}
+          />
+        </div>
+        <div>
+          <label style={labelStyle}>Email</label>
+          <input
+            style={inputStyle}
+            placeholder="your@email.com"
+            type="email"
+            name="email"
+            required
+            onFocus={(e) => (e.target.style.borderBottomColor = "#C41230")}
+            onBlur={(e) => (e.target.style.borderBottomColor = "#E0D8CC")}
+          />
+        </div>
+      </div>
+      <div style={{ marginBottom: "2rem" }}>
+        <label style={labelStyle}>Phone</label>
+        <input
+          style={inputStyle}
+          placeholder="+91 00000 00000"
+          type="tel"
+          name="phone"
+          onFocus={(e) => (e.target.style.borderBottomColor = "#C41230")}
+          onBlur={(e) => (e.target.style.borderBottomColor = "#E0D8CC")}
+        />
+      </div>
+      {type === "distributor" && (
+        <div style={{ marginBottom: "2rem" }}>
+          <label style={labelStyle}>Company</label>
+          <input
+            style={inputStyle}
+            placeholder="Your company name"
+            type="text"
+            name="company"
+            onFocus={(e) => (e.target.style.borderBottomColor = "#C41230")}
+            onBlur={(e) => (e.target.style.borderBottomColor = "#E0D8CC")}
+          />
+        </div>
+      )}
+      <div style={{ marginBottom: "2.5rem" }}>
+        <label style={labelStyle}>Message</label>
+        <textarea
+          style={{ ...inputStyle, resize: "none" }}
+          placeholder={
+            type === "customer"
+              ? "How can we help you?"
+              : "Tell us about your distribution requirements..."
+          }
+          name="message"
+          rows={4}
+          required
+          onFocus={(e) => (e.target.style.borderBottomColor = "#C41230")}
+          onBlur={(e) => (e.target.style.borderBottomColor = "#E0D8CC")}
+        />
+      </div>
+      <button
+        type="submit"
+        disabled={isSending}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.75rem",
+          backgroundColor: isSending ? "#786E63" : "#C41230",
+          color: "#ffffff",
+          padding: "0.875rem 1.75rem",
+          fontSize: "0.7rem",
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+          fontWeight: 500,
+          border: "none",
+          cursor: isSending ? "not-allowed" : "pointer",
+          transition: "background-color 0.3s ease",
+        }}
+        onMouseEnter={(e) =>
+          !isSending && (e.currentTarget.style.backgroundColor = "#A00E27")
+        }
+        onMouseLeave={(e) =>
+          !isSending && (e.currentTarget.style.backgroundColor = "#C41230")
+        }
+      >
+        {isSending ? "Sending..." : "Send Message"}
+      </button>
+    </form>
+  );
+
   return (
-    <div className="w-full" id="contact">
-      <section className="body-font" id="products">
-        <div className="container px-10 py-24 mx-auto">
-          <div className="mb-10">
-            <h2 className="text-3xl font-bold tracki text-center sm:text-5xl">
-              Let&#39;s Talk
-            </h2>
-            <p className="max-w-3xl mx-auto mt-4 text-xl text-center">
-              Whether you&#39;re a customer or a distributor, get in touch with
-              us to learn more about our products and services.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-6 justify-center">
-            <Tabs
-              defaultValue="Shadcn-ui Installation"
-              className="min-w-[90vw] flex flex-col md:justify-center md:items-center p-10"
+    <section
+      id="contact"
+      style={{ backgroundColor: "#FAF7F2", borderTop: "1px solid #E0D8CC" }}
+      className="py-24"
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <div
+          style={{ gap: "4rem" }}
+          className="grid grid-cols-1 lg:grid-cols-2 lg:gap-16"
+        >
+          {/* Left: Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span
+              style={{
+                fontSize: "0.7rem",
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                color: "#C41230",
+                fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+              }}
             >
-              <TabsList className="mx-auto flex justify-center w-max bg-gray-200 text-black">
-                <TabsTrigger value="Shadcn-ui Installation">
-                  Customer Enquiry
-                </TabsTrigger>
-                <TabsTrigger value="Inators UI Usage">
-                  Distributor Enquiry
-                </TabsTrigger>
+              Get in Touch
+            </span>
+            <h2
+              style={{
+                fontFamily: "var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                fontWeight: 300,
+                color: "#1A1510",
+                lineHeight: 1.1,
+                marginTop: "0.75rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              {"Let's talk"} <br />
+              {"about "}
+              <em style={{ fontStyle: "italic", color: "#C41230" }}>MOYO</em>
+            </h2>
+            <p
+              style={{
+                color: "#786E63",
+                fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                lineHeight: 1.75,
+                maxWidth: "360px",
+                marginBottom: "2.5rem",
+                fontSize: "0.95rem",
+              }}
+            >
+              Whether you&#39;re a customer with a question or a distributor
+              looking to partner &mdash; we&#39;d love to hear from you.
+            </p>
+
+            <div>
+              {[
+                { label: "Customer Support", value: "care@moyobrands.com" },
+                {
+                  label: "Business Enquiries",
+                  value: "business@moyobrands.com",
+                },
+                { label: "Location", value: "Mumbai, India" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  style={{
+                    display: "flex",
+                    gap: "1.5rem",
+                    alignItems: "flex-start",
+                    borderBottom: "1px solid #E0D8CC",
+                    paddingBottom: "1rem",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "0.6rem",
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      color: "#786E63",
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                      width: "140px",
+                      flexShrink: 0,
+                      paddingTop: "2px",
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                  <span
+                    style={{
+                      color: "#1A1510",
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    {item.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right: Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            <Tabs defaultValue="customer">
+              <TabsList
+                style={{
+                  backgroundColor: "transparent",
+                  borderBottom: "1px solid #E0D8CC",
+                  width: "100%",
+                  borderRadius: 0,
+                  padding: 0,
+                  height: "auto",
+                  gap: 0,
+                  justifyContent: "flex-start",
+                }}
+              >
+                {["customer", "distributor"].map((tab) => (
+                  <TabsTrigger
+                    key={tab}
+                    value={tab}
+                    style={{
+                      borderRadius: 0,
+                      backgroundColor: "transparent",
+                      boxShadow: "none",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.25em",
+                      textTransform: "uppercase",
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                      paddingLeft: 0,
+                      paddingBottom: "0.75rem",
+                      marginRight: "2rem",
+                    }}
+                    className="data-[state=active]:text-[#C41230] data-[state=active]:border-b-2 data-[state=active]:border-[#C41230] text-[#786E63]"
+                  >
+                    {tab === "customer" ? "Customer" : "Distributor"}
+                  </TabsTrigger>
+                ))}
               </TabsList>
 
-              {/* Customer Enquiry Form */}
-              <TabsContent
-                value="Shadcn-ui Installation"
-                className="mt-10 min-w-[80vw]"
-              >
-                <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-                  <div className="mx-auto max-w-lg">
-                    <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
-                      Customer Enquiry
-                    </h1>
-                    <p className="mx-auto mt-4 mb-6 max-w-md text-center text-gray-500">
-                      We&#39;d love to hear from you! Let us know how we can
-                      help with your needs.
-                    </p>
-                    <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-                      <form
-                        ref={customerForm}
-                        onSubmit={(e) => sendEmail(e, customerForm)}
-                        className="space-y-4"
-                      >
-                        <input type="hidden" name="client" value="customer" />
-                        <div>
-                          <label className="sr-only" htmlFor="name">
-                            Name
-                          </label>
-                          <input
-                            className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                            placeholder="Name"
-                            type="text"
-                            name="name"
-                            id="name"
-                            required
-                          />
-                        </div>
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                          <div>
-                            <label className="sr-only" htmlFor="email">
-                              Email
-                            </label>
-                            <input
-                              className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                              placeholder="Email address"
-                              type="email"
-                              name="email"
-                              id="email"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="sr-only" htmlFor="phone">
-                              Phone
-                            </label>
-                            <input
-                              className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                              placeholder="Phone Number"
-                              type="tel"
-                              name="phone"
-                              id="phone"
-                              required
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <label className="sr-only" htmlFor="message">
-                            Message
-                          </label>
-                          <textarea
-                            className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                            placeholder="Message"
-                            rows="8"
-                            name="message"
-                            id="message"
-                            required
-                          ></textarea>
-                        </div>
-                        <div className="mt-4">
-                          <button
-                            type="submit"
-                            disabled={isSending}
-                            className="inline-block w-full rounded-lg bg-rose-500 px-5 py-3 font-medium text-white sm:w-auto"
-                          >
-                            {isSending ? (
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="1.2em"
-                                height="1.2em"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  fill="#ffffff"
-                                  d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
-                                  opacity={0.25}
-                                ></path>
-                                <path
-                                  fill="#ffffff"
-                                  d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z"
-                                >
-                                  <animateTransform
-                                    attributeName="transform"
-                                    dur="0.75s"
-                                    repeatCount="indefinite"
-                                    type="rotate"
-                                    values="0 12 12;360 12 12"
-                                  ></animateTransform>
-                                </path>
-                              </svg>
-                            ) : (
-                              "Send Enquiry"
-                            )}
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+              <TabsContent value="customer">
+                <FormFields
+                  formRef={customerForm}
+                  onSubmit={sendEmail}
+                  type="customer"
+                />
               </TabsContent>
-
-              {/* Distributor Enquiry Form */}
-              <TabsContent
-                value="Inators UI Usage"
-                className="mt-10 min-w-[80vw]"
-              >
-                <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-                  <div className="mx-auto max-w-lg">
-                    <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
-                      Distributor Enquiry
-                    </h1>
-                    <p className="mx-auto mt-4 mb-6 max-w-md text-center text-gray-500">
-                      Interested in becoming a distributor? Let us know, and
-                      we&#39;ll get back to you with details.
-                    </p>
-                    <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-                      <form
-                        ref={distributorForm}
-                        onSubmit={(e) => sendEmail(e, distributorForm)}
-                        className="space-y-4"
-                      >
-                        <input
-                          type="hidden"
-                          name="client"
-                          value="distributor"
-                        />
-                        <div>
-                          <label className="sr-only" htmlFor="name">
-                            Name
-                          </label>
-                          <input
-                            className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                            placeholder="Name"
-                            type="text"
-                            name="name"
-                            id="name"
-                            required
-                          />
-                        </div>
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                          <div>
-                            <label className="sr-only" htmlFor="email">
-                              Email
-                            </label>
-                            <input
-                              className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                              placeholder="Email address"
-                              type="email"
-                              name="email"
-                              id="email"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label className="sr-only" htmlFor="phone">
-                              Phone
-                            </label>
-                            <input
-                              className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                              placeholder="Phone Number"
-                              type="tel"
-                              name="phone"
-                              id="phone"
-                              required
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <label className="sr-only" htmlFor="address">
-                            Address
-                          </label>
-                          <textarea
-                            className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                            placeholder="Enter your full address"
-                            rows="8"
-                            name="address"
-                            id="address"
-                            required
-                          ></textarea>
-                        </div>
-                        <div>
-                          <label className="sr-only" htmlFor="message">
-                            Message
-                          </label>
-                          <textarea
-                            className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                            placeholder="Message"
-                            rows="8"
-                            name="message"
-                            id="message"
-                            required
-                          ></textarea>
-                        </div>
-                        <div className="mt-4">
-                          <button
-                            type="submit"
-                            className="inline-block w-full rounded-lg bg-rose-500 px-5 py-3 font-medium text-white sm:w-auto"
-                          >
-                            {isSending ? (
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="1.2em"
-                                height="1.2em"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  fill="#ffffff"
-                                  d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
-                                  opacity={0.25}
-                                ></path>
-                                <path
-                                  fill="#ffffff"
-                                  d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z"
-                                >
-                                  <animateTransform
-                                    attributeName="transform"
-                                    dur="0.75s"
-                                    repeatCount="indefinite"
-                                    type="rotate"
-                                    values="0 12 12;360 12 12"
-                                  ></animateTransform>
-                                </path>
-                              </svg>
-                            ) : (
-                              "Send Enquiry"
-                            )}
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+              <TabsContent value="distributor">
+                <FormFields
+                  formRef={distributorForm}
+                  onSubmit={sendEmail}
+                  type="distributor"
+                />
               </TabsContent>
             </Tabs>
-          </div>
+          </motion.div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

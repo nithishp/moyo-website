@@ -1,21 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import MainNav from "@/components/mainNav";
-import MainFooter from "@/components/mainFooter";
+import LenisProvider from "@/components/LenisProvider";
+import CursorFollower from "@/components/CursorFollower";
+import ScrollProgress from "@/components/ScrollProgress";
 import { Toaster } from "sonner";
-import Head from "next/head";
-import Footer from './_components/Footer'
-import {NavigationBar} from './_components/NavigationBar';  
-import './global.css'
+import "./global.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
 
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "MOYO",
+  title: "MOYO — Everyone Deserves the Best",
   description:
-    "Check out Our MOYO store",
-
+    "Premium home essentials — Tissues, Aluminium Foil, and Sustainable Bags designed for every household.",
 };
 
 export default function RootLayout({
@@ -24,18 +33,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <Head>
-        <link rel="shortcut icon" href="/favicon.ico" />
-      </Head>
-      <body className={inter.className}>
-        <MainNav/>
-          <div className="min-h-screen w-screen mt-16">{children}</div>
-        
-        <div>
-          
+    <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
+      <body
+        style={{
+          fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+          backgroundColor: "#FAF7F2",
+          color: "#1A1510",
+        }}
+      >
+        <LenisProvider>
+          <CursorFollower />
+          <ScrollProgress />
+          <MainNav />
+          <div className="min-h-screen w-full">{children}</div>
           <Toaster />
-        </div>
+        </LenisProvider>
       </body>
     </html>
   );

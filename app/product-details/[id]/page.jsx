@@ -1,128 +1,309 @@
-"use client";
-import { useState } from "react";
+﻿"use client";
+
+import { useState, use } from "react";
 import Image from "next/image";
 import { ProductData } from "@/data";
 import ProductNotFound from "@/app/_components/ProductNotFound";
-import { Lens } from "@/components/ui/lens";
+import { motion } from "framer-motion";
 
 const ProductDetails = ({ params }) => {
-  const [hovering, setHovering] = useState(false);
-  const product = ProductData.find((item) => item.id === parseInt(params.id));
+  const { id } = use(params);
+  const product = ProductData.find((item) => item.id === parseInt(id));
 
-  // Use useState hook outside conditional block
   const [selectedVariant, setSelectedVariant] = useState(
-    product ? product.variants[0] : null
+    product ? product.variants[0] : null,
   );
 
   if (!product) {
     return <ProductNotFound />;
   }
 
-  const handleVariantChange = (e) => {
-    const variantId = parseInt(e.target.value);
-    const variant = product.variants.find((v) => v.id === variantId);
-    setSelectedVariant(variant);
-  };
-
   return (
-    <div>
-      <section className="body-font overflow-hidden">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <Lens hovering={hovering} setHovering={setHovering} zoomFactor={2}>
-            
-            <Image
-              height={500}
-              width={500}
-              alt="product"
-              className="lg:w-[23vw] w-full lg:h-auto h-[50vh] object-cover object-center rounded"
-              src={selectedVariant?.image || product.img}
+    <main
+      style={{
+        backgroundColor: "#FAF7F2",
+        minHeight: "100vh",
+        paddingTop: "7rem",
+        paddingBottom: "6rem",
+      }}
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        {/* Breadcrumb */}
+        <p
+          style={{
+            fontFamily: "var(--font-dm-sans)",
+            fontSize: "0.75rem",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "#786E63",
+            marginBottom: "3rem",
+          }}
+        >
+          Products / {product.category} /{" "}
+          <span style={{ color: "#1A1510" }}>{product.name}</span>
+        </p>
+
+        {/* Main split layout */}
+        <div
+          style={{
+            gap: "4rem",
+            alignItems: "start",
+          }}
+          className="grid grid-cols-1 lg:grid-cols-2 lg:gap-20"
+        >
+          {/* Left â€” Image with offset shadow */}
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            style={{ position: "relative" }}
+          >
+            {/* Offset shadow box */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                transform: "translate(18px, 18px)",
+                border: "1px solid #E0D8CC",
+                zIndex: 0,
+              }}
             />
-            </Lens>
-            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 className="text-sm title-font tracking-widest">
-                {product.category}
-              </h2>
-              <h1 className="text-3xl  text-rose-500 title-font font-semibold mb-1">
-                {product.name}
-              </h1>
-              <p className="leading-relaxed">{product.description}</p>
-
-              {/* Variant Selection */}
-              <div className="flex mt-6 items-center pb-5 mb-5">
-                <div className="flex items-center">
-                  <span className="mr-3 text-rose-500 font-medium">
-                    Variants
-                  </span>
-                  <div className="relative">
-                    <select
-                      className="rounded border appearance-none py-2 focus:outline-none focus:ring-2 focus:ring-rose-200 focus:border-rose-500 text-base pl-3 pr-10"
-                      value={selectedVariant?.id || ""}
-                      onChange={handleVariantChange}
-                    >
-                      {product.variants.map((variant) => (
-                        <option key={variant.id} value={variant.id}>
-                          {variant.variant}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="absolute right-0 top-0 h-full w-10 text-center pointer-events-none flex items-center justify-center">
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        className="w-4 h-4"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M6 9l6 6 6-6" />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Display selected variant attributes */}
-              <div className="border-b mb-3">
-                {product.attributes.map((item, i) => (
-                  <div key={i} className="flex border-t  py-2">
-                    <span className="text-rose-500 font-medium">
-                      {item.name}
-                    </span>
-                    <span className="ml-auto">{item.value}</span>
-                  </div>
-                ))}
-              </div>
-
-              
+            <div
+              style={{
+                position: "relative",
+                zIndex: 1,
+                backgroundColor: "#F2EDE4",
+                aspectRatio: "1 / 1",
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "1rem",
+              }}
+            >
+              <Image
+                src={selectedVariant?.image || product.img}
+                alt={product.name}
+                fill
+                style={{ objectFit: "contain", padding: "1.25rem" }}
+                sizes="(max-width: 1024px) 100vw, 45vw"
+              />
             </div>
-          </div>
-        </div>
-        <div>
-          <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 ">
-            <h2 className="mb-8 text-4xl font-bold text-center">
-              What makes this Best
-            </h2>
-            <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-              {product.advantages.map((item, i) => (
-                <li key={i} className="flex items-center space-x-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-5 h-5 fill-current text-rose-600"
+          </motion.div>
+
+          {/* Right â€” Product details */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {/* Category */}
+            <p
+              style={{
+                fontFamily: "var(--font-dm-sans)",
+                fontSize: "0.7rem",
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: "#C41230",
+                marginBottom: "0.75rem",
+              }}
+            >
+              {product.category}
+            </p>
+
+            {/* Product name */}
+            <h1
+              style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "clamp(2rem, 4vw, 3rem)",
+                fontWeight: 400,
+                color: "#1A1510",
+                lineHeight: 1.1,
+                marginBottom: "1.5rem",
+              }}
+            >
+              {product.name}
+            </h1>
+
+            {/* Divider */}
+            <div
+              style={{
+                width: "40px",
+                height: "2px",
+                backgroundColor: "#C41230",
+                marginBottom: "1.5rem",
+              }}
+            />
+
+            {/* Description */}
+            <p
+              style={{
+                fontFamily: "var(--font-dm-sans)",
+                fontSize: "1rem",
+                color: "#786E63",
+                lineHeight: 1.8,
+                marginBottom: "2rem",
+              }}
+            >
+              {product.description}
+            </p>
+
+            {/* Variant selector */}
+            <div style={{ marginBottom: "2rem" }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-dm-sans)",
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "#786E63",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Variants
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                {product.variants.map((variant) => {
+                  const isSelected = selectedVariant?.id === variant.id;
+                  return (
+                    <button
+                      key={variant.id}
+                      onClick={() => setSelectedVariant(variant)}
+                      style={{
+                        padding: "0.4rem 1rem",
+                        fontFamily: "var(--font-dm-sans)",
+                        fontSize: "0.8rem",
+                        border: isSelected
+                          ? "1px solid #C41230"
+                          : "1px solid #E0D8CC",
+                        backgroundColor: isSelected ? "#C41230" : "transparent",
+                        color: isSelected ? "#fff" : "#786E63",
+                        cursor: "pointer",
+                        transition: "all 0.2s",
+                        letterSpacing: "0.05em",
+                      }}
+                    >
+                      {variant.variant}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Attributes */}
+            <div
+              style={{
+                borderTop: "1px solid #E0D8CC",
+                marginBottom: "2rem",
+              }}
+            >
+              {product.attributes.map((attr, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "0.75rem 0",
+                    borderBottom: "1px solid #E0D8CC",
+                    fontFamily: "var(--font-dm-sans)",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  <span
+                    style={{
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      fontSize: "0.7rem",
+                      color: "#786E63",
+                    }}
                   >
-                    <path d="M426.072,86.928A238.75,238.75,0,0,0,88.428,424.572,238.75,238.75,0,0,0,426.072,86.928ZM257.25,462.5c-114,0-206.75-92.748-206.75-206.75S143.248,49,257.25,49,464,141.748,464,255.75,371.252,462.5,257.25,462.5Z"></path>
-                    <polygon points="221.27 305.808 147.857 232.396 125.23 255.023 221.27 351.063 388.77 183.564 366.142 160.937 221.27 305.808"></polygon>
-                  </svg>
-                  <span>{item}</span>
-                </li>
+                    {attr.name}
+                  </span>
+                  <span style={{ color: "#1A1510" }}>{attr.value}</span>
+                </div>
               ))}
-            </ul>
-          </div>
+            </div>
+          </motion.div>
         </div>
-      </section>
-    </div>
+
+        {/* Advantages section */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ marginTop: "6rem" }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontSize: "0.75rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "#C41230",
+              marginBottom: "0.75rem",
+            }}
+          >
+            Why Choose This
+          </p>
+          <h2
+            style={{
+              fontFamily: "var(--font-cormorant)",
+              fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)",
+              fontWeight: 400,
+              color: "#1A1510",
+              marginBottom: "2.5rem",
+            }}
+          >
+            What makes this the best
+          </h2>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+              gap: "1px",
+              backgroundColor: "#E0D8CC",
+            }}
+          >
+            {product.advantages.map((adv, i) => (
+              <div
+                key={i}
+                style={{
+                  backgroundColor: "#FAF7F2",
+                  padding: "1.75rem",
+                  display: "flex",
+                  gap: "1rem",
+                  alignItems: "flex-start",
+                }}
+              >
+                <span
+                  style={{
+                    color: "#C41230",
+                    fontSize: "1.2rem",
+                    marginTop: "2px",
+                    flexShrink: 0,
+                  }}
+                >
+                  â€”
+                </span>
+                <p
+                  style={{
+                    fontFamily: "var(--font-dm-sans)",
+                    fontSize: "0.9rem",
+                    color: "#1A1510",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {adv}
+                </p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </main>
   );
 };
 

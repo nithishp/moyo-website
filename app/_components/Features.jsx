@@ -1,360 +1,287 @@
-'use client'
+﻿"use client";
+// REDESIGNED
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+const categories = [
+  {
+    number: "01",
+    title: "Tissue Box",
+    tagline: "Softness you can feel",
+    description:
+      "MOYO's tissue boxes deliver ultra-soft, absorbent tissues perfect for everyday use. Crafted from 100% virgin pulp, each pull is gentle on skin while keeping your space elegant.",
+    features: [
+      "Soft & Absorbent",
+      "Elegant Box Design",
+      "Eco-Friendly Materials",
+    ],
+    image: "/products/TISSUE-BOX-RED.png",
+    href: "/product-details/1",
+  },
+  {
+    number: "02",
+    title: "Aluminium Foil",
+    tagline: "Kitchen mastery, wrapped",
+    description:
+      "Professional-grade aluminium foil for cooking, wrapping, and storing. MOYO's foil offers superior heat retention and an impeccable seal to keep your food fresh.",
+    features: [
+      "Superior Heat Retention",
+      "Tear-Resistant",
+      "Food-Safe Coating",
+    ],
+    image: "/products/ALUMINIUM-FOIL.png",
+    href: "/product-details/2",
+  },
+  {
+    number: "03",
+    title: "Waste Bags",
+    tagline: "Hygiene, handled",
+    description:
+      "Reliable, heavy-duty bags for home, office, and institutional use. MOYO's waste bags are built to last, keeping your spaces clean without compromise.",
+    features: ["Heavy-Duty Construction", "Leak-Proof Seal", "Multiple Sizes"],
+    image: "/products/GARBAGE-BAG.png",
+    href: "/product-details/3",
+  },
+];
 
 const Features = () => {
-  const featureVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.3,
-        duration: 0.5,
-      },
-    }),
-  };
-
-  const HomeImages = [
-    "/products/TISSUE-BOX-RED.png",
-    "/products/TISSUE-BOX-BLUE.png",
-    "/products/TISSUE-BOX-WHITE.png",
-    
-  ];
-
-  const KitchenImages = [
-    "/products/ALUMINIUM-FOIL.png",
-    
-  ];
-
-  const HygieneImages = [
-   
-    "/products/DISPOSAL-BAG.png",
-  ];
-
-  const [currentHomeIndex, setCurrentHomeIndex] = useState(0);
-  const [currentKitchenIndex, setCurrentKitchenIndex] = useState(0);
-  const [currentHygieneIndex, setCurrentHygieneIndex] = useState(0);
-
-  useEffect(() => {
-    const homeInterval = setInterval(() => {
-      setCurrentHomeIndex((prevIndex) => (prevIndex + 1) % HomeImages.length);
-    }, 3000);
-    return () => clearInterval(homeInterval);
-  }, []);
-
-  useEffect(() => {
-    const kitchenInterval = setInterval(() => {
-      setCurrentKitchenIndex(
-        (prevIndex) => (prevIndex + 1) % KitchenImages.length
-      );
-    }, 3000);
-    return () => clearInterval(kitchenInterval);
-  }, []);
-
-  useEffect(() => {
-    const hygieneInterval = setInterval(() => {
-      setCurrentHygieneIndex(
-        (prevIndex) => (prevIndex + 1) % HygieneImages.length
-      );
-    }, 3000);
-    return () => clearInterval(hygieneInterval);
-  }, []);
-
   return (
-    <div>
-      <section className="" id="features">
-        <div className="container max-w-xl p-6 py-12 mx-auto space-y-24 lg:px-8 lg:max-w-7xl">
-          {/* HEADING */}
-          <div>
-            <h2 className="text-3xl font-bold tracki text-center sm:text-5xl ">
-              Take a Look at our products
-            </h2>
-            <p className="max-w-3xl mx-auto mt-4 text-xl text-center ">
-              We try to bring you the best quality home products.
-            </p>
-          </div>
-
-          {/* FEATURE 1: Tissue Box */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid lg:gap-8 lg:grid-cols-2 lg:items-center"
+    <section
+      id="features"
+      style={{ backgroundColor: "#FAF7F2" }}
+      className="py-24"
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
+        >
+          <span
+            style={{
+              fontSize: "0.7rem",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "#C41230",
+              fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+            }}
           >
-            <div>
-              <h3 className="text-2xl font-bold tracki sm:text-3xl ">
-                Tissue Box
-              </h3>
-              <p className="mt-3 text-lg ">
-                MOYO’s tissue boxes offer soft and strong tissues for daily use,
-                perfect for sensitive skin, quick clean-ups, and household
-                needs.
-              </p>
-              {/* Feature Description */}
-              <div className="mt-12 space-y-12">
-                {[
-                  {
-                    title: "Soft and Absorbent Tissues",
-                    description:
-                      "Experience ultra-soft tissues that are gentle on the skin while offering superior absorbency for quick cleanup.",
-                  },
-                  {
-                    title: "Elegant Box Design",
-                    description:
-                      "Stylish, compact box design that complements any room décor and is easy to place anywhere.",
-                  },
-                  {
-                    title: "Environmentally Friendly Materials",
-                    description:
-                      "Made from eco-friendly, recyclable materials to minimize environmental impact without compromising quality.",
-                  },
-                ].map((feature, i) => (
-                  <motion.div
-                    key={i}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={featureVariants}
-                    className="flex"
-                  >
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-rose-600 text-gray-50">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leadi ">
-                        {feature.title}
-                      </h4>
-                      <p className="mt-2 ">{feature.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-            <div aria-hidden="true" className="mt-10 lg:mt-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentHomeIndex}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Image
-                    src={HomeImages[currentHomeIndex]}
-                    alt={`MOYO product ${currentHomeIndex}`}
-                    height={500}
-                    width={800}
-                    className="mx-auto rounded-lg object-top object-contain"
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
-          {/* FEATURE 2: Aluminum Foil */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid lg:gap-8 lg:grid-cols-2 lg:items-center"
+            Our Catalogue
+          </span>
+          <h2
+            style={{
+              fontFamily: "var(--font-cormorant), Georgia, serif",
+              fontSize: "clamp(2.5rem, 6vw, 5rem)",
+              fontWeight: 300,
+              color: "#1A1510",
+              lineHeight: 1.1,
+              marginTop: "0.75rem",
+            }}
           >
-            <div className="lg:col-start-2">
-              <h3 className="text-2xl font-bold tracki sm:text-3xl ">
-                Aluminum Foil
+            Products made
+            <br />
+            for{" "}
+            <em style={{ fontStyle: "italic", color: "#C41230" }}>
+              every home
+            </em>
+          </h2>
+        </motion.div>
+
+        {/* Product feature rows */}
+        {categories.map((cat, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              padding: "4rem 0",
+              borderTop: "1px solid #E0D8CC",
+            }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 md:items-center"
+          >
+            {/* Text */}
+            <div className={i % 2 === 1 ? "md:order-2" : "md:order-1"}>
+              <span
+                style={{
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
+                  fontSize: "6rem",
+                  fontWeight: 300,
+                  color: "#E8DDD0",
+                  lineHeight: 1,
+                  display: "block",
+                  marginBottom: "-1rem",
+                  userSelect: "none",
+                }}
+              >
+                {cat.number}
+              </span>
+              <h3
+                style={{
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(2rem, 4vw, 3rem)",
+                  fontWeight: 500,
+                  color: "#1A1510",
+                  marginBottom: "0.5rem",
+                  lineHeight: 1.1,
+                }}
+              >
+                {cat.title}
               </h3>
-              <p className="mt-3 text-lg ">
-                Versatile and Durable Kitchen Essential
+              <p
+                style={{
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.25em",
+                  textTransform: "uppercase",
+                  color: "#C41230",
+                  fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                  marginBottom: "1.25rem",
+                }}
+              >
+                {cat.tagline}
               </p>
-              <div className="mt-12 space-y-12">
-                {[
-                  {
-                    title: "Heavy-Duty Strength",
-                    description:
-                      "Durable and tear-resistant foil for covering, wrapping, and storing food securely.",
-                  },
-                  {
-                    title: "Heat and Cold Resistant",
-                    description:
-                      "Perfect for cooking, grilling, and freezing, withstanding both high heat and extreme cold without breaking down.",
-                  },
-                  {
-                    title: "Multi-Purpose Use",
-                    description:
-                      "Ideal for food preservation, baking, and even household tasks like lining trays or cleaning pots.",
-                  },
-                ].map((feature, i) => (
-                  <motion.div
-                    key={i}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={featureVariants}
-                    className="flex"
+              <p
+                style={{
+                  color: "#786E63",
+                  fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                  lineHeight: 1.75,
+                  marginBottom: "2rem",
+                  maxWidth: "420px",
+                  fontSize: "0.95rem",
+                }}
+              >
+                {cat.description}
+              </p>
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  marginBottom: "2.5rem",
+                }}
+              >
+                {cat.features.map((f, j) => (
+                  <li
+                    key={j}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                      fontSize: "0.85rem",
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                      color: "#1A1510",
+                    }}
                   >
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-rose-600 text-gray-50">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leadi ">
-                        {feature.title}
-                      </h4>
-                      <p className="mt-2 ">{feature.description}</p>
-                    </div>
-                  </motion.div>
+                    <span
+                      style={{
+                        width: "20px",
+                        height: "1px",
+                        backgroundColor: "#C41230",
+                        flexShrink: 0,
+                        display: "block",
+                      }}
+                    />
+                    {f}
+                  </li>
                 ))}
-              </div>
+              </ul>
+              <a
+                href={cat.href}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                  fontWeight: 500,
+                  color: "#1A1510",
+                  textDecoration: "none",
+                  borderBottom: "1px solid #1A1510",
+                  paddingBottom: "2px",
+                  transition: "color 0.2s, border-color 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "#C41230";
+                  e.currentTarget.style.borderBottomColor = "#C41230";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "#1A1510";
+                  e.currentTarget.style.borderBottomColor = "#1A1510";
+                }}
+              >
+                View Product &rarr;
+              </a>
             </div>
+
+            {/* Image */}
             <div
-              aria-hidden="true"
-              className="mt-10 lg:mt-0 lg:col-start-1 lg:row-start-1"
+              style={{ position: "relative" }}
+              className={i % 2 === 1 ? "md:order-1" : "md:order-2"}
             >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentKitchenIndex}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5 }}
+              <motion.div
+                initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+                whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 1.1,
+                  ease: [0.76, 0, 0.24, 1],
+                  delay: 0.1,
+                }}
+              >
+                <div
+                  style={{
+                    backgroundColor: "#F0EBE0",
+                    aspectRatio: "1 / 1",
+                    position: "relative",
+                    overflow: "hidden",
+                    maxHeight: "520px",
+                    maxWidth: "520px",
+                    margin: "0 auto",
+                  }}
                 >
-                  <Image
-                    src={KitchenImages[currentKitchenIndex]}
-                    alt={`MOYO product ${currentKitchenIndex}`}
-                    height={500}
-                    width={800}
-                    className="mx-auto rounded-lg object-top object-contain"
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
-          {/* FEATURE 3: Disposable Bags */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid lg:gap-8 lg:grid-cols-2 lg:items-center"
-          >
-            <div>
-              <h3 className="text-2xl font-bold tracki sm:text-3xl ">
-                Disposable Bags
-              </h3>
-              <p className="mt-3 text-lg ">
-                Dispose of waste conveniently and hygienically with MOYO’s
-                premium disposable bags.
-              </p>
-              <div className="mt-12 space-y-12">
-                {[
-                  {
-                    title: "Leak-Proof Design",
-                    description:
-                      "Our disposable bags are designed to be leak-proof and tear-resistant for maximum cleanliness.",
-                  },
-                  {
-                    title: "Odor Control",
-                    description:
-                      "Effectively seals in odors, keeping your space fresh and hygienic even when storing waste.",
-                  },
-                  {
-                    title: "Easy to Use",
-                    description:
-                      "Quickly and easily seal bags to dispose of waste without any mess or hassle.",
-                  },
-                ].map((feature, i) => (
                   <motion.div
-                    key={i}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={featureVariants}
-                    className="flex"
+                    whileHover={{ scale: 1.04 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ position: "absolute", inset: 0 }}
                   >
-                    <div className="flex-shrink-0">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-rose-600 text-gray-50">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-7 h-7"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium leadi ">
-                        {feature.title}
-                      </h4>
-                      <p className="mt-2 ">{feature.description}</p>
-                    </div>
+                    <Image
+                      src={cat.image}
+                      alt={cat.title}
+                      fill
+                      className="object-contain"
+                      style={{ padding: "2rem" }}
+                      sizes="(max-width: 768px) 90vw, 45vw"
+                    />
                   </motion.div>
-                ))}
-              </div>
-            </div>
-            <div aria-hidden="true" className="mt-10 lg:mt-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentHygieneIndex}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Image
-                    src={HygieneImages[currentHygieneIndex]}
-                    alt={`MOYO product ${currentHygieneIndex}`}
-                    height={500}
-                    width={800}
-                    className="mx-auto rounded-lg object-top object-contain"
-                  />
-                </motion.div>
-              </AnimatePresence>
+                </div>
+              </motion.div>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  zIndex: -1,
+                  backgroundColor: "#E0D8CC",
+                  transform:
+                    i % 2 === 0
+                      ? "translate(12px, 12px)"
+                      : "translate(-12px, 12px)",
+                  maxHeight: "520px",
+                  maxWidth: "520px",
+                  margin: "0 auto",
+                }}
+              />
             </div>
           </motion.div>
-        </div>
-      </section>
-    </div>
+        ))}
+      </div>
+    </section>
   );
 };
 

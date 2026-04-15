@@ -1,112 +1,157 @@
-import { Card } from "@/components/ui/card";
+﻿"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
 import { testimonials } from "@/data";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const Testimonialcard = () => {
+// Infinite marquee row
+const MarqueeRow = ({ items, direction = 1, speed = 30 }) => {
+  const doubled = [...items, ...items];
   return (
-    <div className="w-full">
-      <section className="" id="testimonials">
-        <div className="container px-6 py-12 mx-auto">
-          <div className="grid items-center gap-4 xl:grid-cols-5">
-            <div className="max-w-2xl mx-auto my-8 space-y-4 text-center xl:col-span-2 xl:text-left">
-              <h2 className="text-4xl font-bold">What Our Clients Say</h2>
-              <p className="">
-                Hear what our satisfied customers are saying about MOYO’s
-                exceptional service and high-quality products.
-              </p>
-            </div>
-            <div className="p-6 xl:col-span-3">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="grid content-center gap-4">
-                  {/* Card 1 */}
-                  <Card className="p-6 rounded shadow-md">
-                    <p>{testimonials[0].feedback}</p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <Image
-                        height={200}
-                        width={200}
-                        src={testimonials[0].image}
-                        alt={testimonials[0].name}
-                        className="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
-                      />
-                      <div>
-                        <p className="text-lg font-semibold">
-                          {testimonials[0].name}
-                        </p>
-                        <p className="text-sm">{testimonials[0].title}</p>
-                      </div>
-                    </div>
-                  </Card>
-
-                  {/* Card 2 */}
-                  <Card className="p-6 rounded shadow-md">
-                    <p>{testimonials[1].feedback}</p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <Image
-                        height={200}
-                        width={200}
-                        src={testimonials[1].image}
-                        alt={testimonials[1].name}
-                        className="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
-                      />
-                      <div>
-                        <p className="text-lg font-semibold">
-                          {testimonials[1].name}
-                        </p>
-                        <p className="text-sm">{testimonials[1].title}</p>
-                      </div>
-                    </div>
-                  </Card>
-                </div>
-
-                <div className="grid content-center gap-4">
-                  {/* Card 3 */}
-                  <Card className="p-6 rounded shadow-md">
-                    <p>{testimonials[2].feedback}</p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <Image
-                        height={200}
-                        width={200}
-                        src={testimonials[2].image}
-                        alt={testimonials[2].name}
-                        className="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
-                      />
-                      <div>
-                        <p className="text-lg font-semibold">
-                          {testimonials[2].name}
-                        </p>
-                        <p className="text-sm">{testimonials[2].title}</p>
-                      </div>
-                    </div>
-                  </Card>
-
-                  {/* Card 4 */}
-                  <Card className="p-6 rounded shadow-md">
-                    <p>{testimonials[3].feedback}</p>
-                    <div className="flex items-center mt-4 space-x-4">
-                      <Image
-                        height={200}
-                        width={200}
-                        src={testimonials[3].image}
-                        alt={testimonials[3].name}
-                        className="w-12 h-12 bg-center bg-cover rounded-full bg-gray-500"
-                      />
-                      <div>
-                        <p className="text-lg font-semibold">
-                          {testimonials[3].name}
-                        </p>
-                        <p className="text-sm">{testimonials[3].title}</p>
-                      </div>
-                    </div>
-                  </Card>
-                </div>
+    <div style={{ overflow: "hidden", position: "relative" }}>
+      <motion.div
+        animate={{ x: direction > 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
+        transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+        style={{ display: "flex", gap: "1rem", width: "max-content" }}
+      >
+        {doubled.map((t, i) => (
+          <div
+            key={i}
+            style={{
+              width: "320px",
+              flexShrink: 0,
+              padding: "1.5rem",
+              border: "1px solid #E0D8CC",
+              backgroundColor: "#FAF7F2",
+              position: "relative",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "var(--font-cormorant), Georgia, serif",
+                fontSize: "3.5rem",
+                color: "#E0D8CC",
+                lineHeight: 1,
+                display: "block",
+                marginTop: "-0.5rem",
+                marginBottom: "0.25rem",
+                userSelect: "none",
+              }}
+            >
+              &ldquo;
+            </span>
+            <p
+              style={{
+                color: "#786E63",
+                fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                fontSize: "0.85rem",
+                lineHeight: 1.75,
+                marginBottom: "1.25rem",
+              }}
+            >
+              {t.feedback}
+            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Image
+                src={t.image}
+                alt={t.name}
+                width={36}
+                height={36}
+                style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0, width: "36px", height: "36px" }}
+              />
+              <div>
+                <p style={{ color: "#1A1510", fontFamily: "var(--font-dm-sans)", fontSize: "0.8rem", fontWeight: 600 }}>
+                  {t.name}
+                </p>
+                <p style={{ color: "#786E63", fontFamily: "var(--font-dm-sans)", fontSize: "0.7rem" }}>
+                  {t.title}
+                </p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        ))}
+      </motion.div>
     </div>
+  );
+};
+
+const Testimonialcard = () => {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const headingX = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
+
+  const half = Math.ceil(testimonials.length / 2);
+  const row1 = testimonials.slice(0, half);
+  const row2 = testimonials.slice(half);
+
+  return (
+    <section
+      ref={sectionRef}
+      id="testimonials"
+      style={{ backgroundColor: "#FAF7F2", overflow: "hidden" }}
+      className="py-24"
+    >
+      <div className="max-w-7xl mx-auto px-6 mb-16">
+        <motion.span
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          style={{
+            display: "block",
+            fontSize: "0.7rem",
+            letterSpacing: "0.3em",
+            textTransform: "uppercase",
+            color: "#C41230",
+            fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+            marginBottom: "0.75rem",
+          }}
+        >
+          What People Say
+        </motion.span>
+        <motion.h2
+          style={{
+            fontFamily: "var(--font-cormorant), Georgia, serif",
+            fontSize: "clamp(2.5rem, 6vw, 5rem)",
+            fontWeight: 300,
+            color: "#1A1510",
+            lineHeight: 1.1,
+            x: headingX,
+          }}
+        >
+          Loved by{" "}
+          <em style={{ fontStyle: "italic", color: "#C41230" }}>thousands</em>
+        </motion.h2>
+      </div>
+
+      {/* Fade masks */}
+      <div style={{ position: "relative" }}>
+        <div
+          style={{
+            position: "absolute",
+            top: 0, bottom: 0, left: 0,
+            width: "120px",
+            background: "linear-gradient(to right, #FAF7F2, transparent)",
+            zIndex: 10,
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 0, bottom: 0, right: 0,
+            width: "120px",
+            background: "linear-gradient(to left, #FAF7F2, transparent)",
+            zIndex: 10,
+            pointerEvents: "none",
+          }}
+        />
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <MarqueeRow items={row1} direction={1} speed={40} />
+          <MarqueeRow items={row2} direction={-1} speed={34} />
+        </div>
+      </div>
+    </section>
   );
 };
 

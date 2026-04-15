@@ -1,9 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const svgToDataUri = require("mini-svg-data-uri");
-const colors = require("tailwindcss/colors");
-const {
-  default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette");
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -113,19 +108,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require("@tailwindcss/forms"),
-    addVariablesForColors,
-  ],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/forms")],
 };
-function addVariablesForColors({ addBase, theme }) {
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
-
-  addBase({
-    ":root": newVars,
-  });
-}

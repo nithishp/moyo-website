@@ -2,194 +2,142 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Flower2, Menu } from "lucide-react";
-import { Button } from "./ui/button";
 import Image from "next/image";
-
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-export default function MainNav() {
-  const [state, setState] = React.useState(false);
+import { motion, AnimatePresence } from "framer-motion";
 
-  const menus = [
-    { title: "Home", path: "/" },
-    { title: "Products", path: "/#products" },
-    { title: "Reviews", path: "/#testimonials" },
-  ];
-  const components = [
-    {
-      title: "Tissue Box",
-      href: "/product-details/1",
-      description: "Experience ultra-soft tissues that are gentle on the skin ",
-    },
-    {
-      title: "Aluminium Foil",
-      href: "/product-details/2",
-      description:
-        "Durable and tear-resistant foil for covering, wrapping, and storing food ",
-    },
-    {
-      title: "Grabage Bage",
-      href: "/product-details/3",
-      description:
-        "Try MOYO garbage bags for home and office use.",
-    },
-    {
-      title: "Disposal Bage",
-      href: "/product-details/3",
-      description:
-        "Dispose of waste conveniently and hygienically with MOYO premium disposable bags",
-    },
-  ];
- 
+const navLinks = [
+  { title: "Home", path: "/" },
+  { title: "Products", path: "/#products" },
+  { title: "About Us", path: "/about" },
+  { title: "Contact", path: "/#contact" },
+];
+
+// Smooth-scroll to hash anchors using Lenis if available
+function handleAnchorClick(
+  e: React.MouseEvent<HTMLAnchorElement>,
+  path: string,
+) {
+  const hash = path.includes("#") ? path.split("#")[1] : null;
+  if (!hash || typeof window === "undefined") return;
+  const lenis = (window as unknown as Record<string, unknown>).lenis as
+    | { scrollTo?: (target: string, opts?: object) => void }
+    | undefined;
+  if (!lenis?.scrollTo) return;
+  const el = document.getElementById(hash);
+  if (!el) return;
+  e.preventDefault();
+  lenis.scrollTo(`#${hash}`, { offset: -80, duration: 1.4 });
+}
+
+export default function MainNav() {
+  const [scrolled, setScrolled] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50">
-      <button
-        className="pr-2 absolute md:hidden right-0 top-4"
-        title="menu"
-        onClick={() => setState(!state)}
-      >
-        <Menu className={`${state && "text-white"}`} />
-      </button>
+    <>
       <header
-        className={`px-4 py-3 flex justify-start items-center ${
-          state ? "bg-black" : "bg-white"
-        }  sm:bg-white`}
+        className={cn(
+          "fixed top-0 left-0 w-full z-50 transition-all duration-500",
+          scrolled
+            ? "bg-[#FAF7F2]/95 backdrop-blur-sm shadow-[0_1px_0_0_#E0D8CC]"
+            : "bg-transparent",
+        )}
       >
-        {!state ? (
-          <Link
-            href="/"
-            aria-label="Back to homepage"
-            className=" flex md:justify-center justify-start items-center gap-3"
-          >
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center flex-shrink-0">
             <Image
-              src="/brand/moyo-logo-black.png"
-              alt="Moyo logo"
-              width={100}
-              height={80}
+              src={
+                scrolled
+                  ? "/brand/moyo-logo-black.png"
+                  : "/brand/moyo-logo-white.png"
+              }
+              alt="MOYO"
+              width={90}
+              height={36}
+              className="transition-all duration-300"
+              priority
             />
           </Link>
-        ) : null}
-        <div className="flex justify-between">
-          <div className="flex ">
-            <div
-              className={`flex-1 justify-self-center pb-3 mt-8 md:block ${
-                state ? "max-sm:text-white" : "max-sm:text-black"
-              } md:pb-0 md:mt-0 ${state ? "block" : "hidden"}`}
-            >
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger> About us </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul
-                        className={`grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] ${
-                          state ? "text-white bg-black" : "text-black bg-white"
-                        }`}
-                      >
-                        <li className="row-span-3">
-                          <NavigationMenuLink asChild>
-                            <a
-                              className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                              href="/"
-                            >
-                            
-                              <div className="mb-2 mt-4 text-lg font-medium">
-                                <span className="moyo">MOYO </span>
-                              </div>
-                              <p className="text-sm leading-tight text-muted-foreground">
-                               Beautiful and modern products for your home
-                              </p>
-                            </a>
-                          </NavigationMenuLink>
-                        </li>
-                        <ListItem href="/#features" title="Best-selling Products">
-                          Take a look at our best-selling products.
-                        </ListItem>
-                        <ListItem
-                          href="/categories"
-                          title="Categories"
-                        >
-                          Moyo has vast range of products take a dive into it.
-                        </ListItem>
-                        <ListItem
-                          href="/#testimonials"
-                          title="Reviews"
-                        >
-                          Take a glance at all our products.
-                        </ListItem>
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger>Products</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul
-                        className={`grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ${
-                          state ? "text-white bg-black" : "text-black bg-white"
-                        }`}
-                      >
-                        {components.map((component) => (
-                          <ListItem
-                            key={component.title}
-                            title={component.title}
-                            href={component.href}
-                          >
-                            {component.description}
-                          </ListItem>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <Link href="/#contact" legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
-                      >
-                        Contact Us
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
-          </div>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.title}
+                href={link.path}
+                onClick={(e) => handleAnchorClick(e, link.path)}
+                className={cn(
+                  "text-xs tracking-[0.2em] uppercase font-medium transition-colors duration-200 relative group py-1",
+                  scrolled ? "text-[#1A1510]" : "text-white/90",
+                )}
+                style={{
+                  fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                }}
+              >
+                {link.title}
+                <span
+                  className={cn(
+                    "absolute -bottom-0.5 left-0 h-px transition-all duration-300",
+                    scrolled ? "bg-[#C41230]" : "bg-white",
+                    "w-0 group-hover:w-full",
+                  )}
+                />
+              </Link>
+            ))}
+          </nav>
+
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className={cn(
+              "md:hidden p-2 transition-colors duration-200",
+              scrolled ? "text-[#1A1510]" : "text-white",
+            )}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </header>
-    </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed inset-x-0 top-16 z-40 bg-[#FAF7F2] border-b border-[#E0D8CC] px-6 py-4 shadow-sm"
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.title}
+                href={link.path}
+                onClick={(e) => {
+                  setMobileOpen(false);
+                  handleAnchorClick(e, link.path);
+                }}
+                className="flex items-center py-3 text-xs tracking-[0.2em] uppercase font-medium text-[#1A1510] border-b border-[#E0D8CC] last:border-0 hover:text-[#C41230] transition-colors duration-200"
+                style={{
+                  fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                }}
+              >
+                {link.title}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-md font-semibold text-amber-200 md:text-rose-500  leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";

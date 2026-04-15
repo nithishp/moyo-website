@@ -1,56 +1,146 @@
-
-import { Card } from "@/components/ui/card";
+﻿"use client";
 import Image from "next/image";
-import {ProductData} from '@/data'
+import { ProductData } from "@/data";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
-const Productbasic = () => {
-
-   
- 
+const ProductSection = () => {
   return (
-    <div className="w-full">
-      <section className=" body-font" id="products">
-        <div className="container px-10 py-24 mx-auto">
-          <div className="mb-10">
-            <h2 className="text-3xl font-bold tracki text-center sm:text-5xl ">
-              Take a Look at our products
+    <section
+      style={{ backgroundColor: "#140F0A" }}
+      className="py-24"
+      id="products"
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 gap-6"
+        >
+          <div>
+            <span
+              style={{
+                fontSize: "0.7rem",
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                color: "#C41230",
+                fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+              }}
+            >
+              Full Range
+            </span>
+            <h2
+              style={{
+                fontFamily: "var(--font-cormorant), Georgia, serif",
+                fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                fontWeight: 300,
+                color: "#FAF7F2",
+                lineHeight: 1.1,
+                marginTop: "0.75rem",
+              }}
+            >
+              Our Products
             </h2>
-            <p className="max-w-3xl mx-auto mt-4 text-xl text-center ">
-              We try to bring you the best quality home products.
-            </p>
           </div>
-          <div className="flex flex-wrap gap-6 justify-center">
-            {ProductData.map((item) => (
-              <Card key={item.id} className="lg:w-1/4 md:w-1/2 p-4 w-full ">
-                <Link
-                  href={`/product-details/${item.id}`}
-                  className="block relative h-48 rounded overflow-hidden cursor-pointer"
+          <p
+            style={{
+              color: "#786E63",
+              fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+              maxWidth: "280px",
+              lineHeight: 1.7,
+              fontSize: "0.9rem",
+            }}
+            className="lg:text-right"
+          >
+            Premium home essentials, thoughtfully designed for every household.
+          </p>
+        </motion.div>
+
+        <div
+          style={{
+            gap: "1px",
+            backgroundColor: "rgba(255,255,255,0.06)",
+          }}
+          className="grid grid-cols-2 lg:grid-cols-4"
+        >
+          {ProductData.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.6 }}
+            >
+              <Link
+                href={`/product-details/${item.id}`}
+                style={{
+                  display: "block",
+                  backgroundColor: "#140F0A",
+                  textDecoration: "none",
+                  transition: "background-color 0.3s ease",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#1E1915")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#140F0A")
+                }
+                className="group"
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    aspectRatio: "1 / 1",
+                    overflow: "hidden",
+                    backgroundColor: "#1A1510",
+                  }}
                 >
                   <Image
-                    height={500}
-                    width={500}
-                    alt="ecommerce"
-                    className="object-contain object-center w-full h-full block"
                     src={item.img}
+                    alt={item.name}
+                    fill
+                    className="object-contain transition-transform duration-500 group-hover:scale-105"
+                    style={{ padding: "2rem" }}
                   />
-                </Link>
-                <div className="mt-4">
-                  <h3 className=" text-xs tracking-widest title-font mb-1">
-                    {item.category}
-                  </h3>
-                  <h2 className=" title-font text-lg font-medium">
-                    {item.name}
-                  </h2>
-              
                 </div>
-              </Card>
-            ))}
-          </div>
+                <div
+                  style={{
+                    padding: "1rem",
+                    borderTop: "1px solid rgba(255,255,255,0.06)",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: "0.6rem",
+                      letterSpacing: "0.25em",
+                      textTransform: "uppercase",
+                      color: "#786E63",
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                      marginBottom: "0.25rem",
+                    }}
+                  >
+                    {item.category}
+                  </p>
+                  <h3
+                    style={{
+                      color: "#FAF7F2",
+                      fontFamily: "var(--font-dm-sans), system-ui, sans-serif",
+                      fontSize: "0.85rem",
+                      fontWeight: 500,
+                    }}
+                    className="group-hover:text-[#C41230] transition-colors duration-200"
+                  >
+                    {item.name}
+                  </h3>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
-export default Productbasic;
+export default ProductSection;
